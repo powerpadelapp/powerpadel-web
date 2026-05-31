@@ -1,8 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>PowerPadel</title></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PowerPadel</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBC7Z6GFYG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TBC7Z6GFYG');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #f5c227;
+      --blue: #3a9fd4;
+      --dark: #0b0c0b;
+      --surface: #1a1d1a;
+      --text: #eef0ee;
+      --muted: #728072;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 2.5rem;
+      background: rgba(11,12,11,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(245,194,39,0.07);
+    }
+
+    .nav-logo img { height: 46px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 9rem 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%; right: -15%;
+      width: 65vw; height: 65vw;
+      background: radial-gradient(circle, rgba(245,194,39,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 5%; left: -10%;
+      width: 45vw; height: 45vw;
+      background: radial-gradient(circle, rgba(58,159,212,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 12vw, 10rem);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-title span { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 44ch;
+      margin-bottom: 3rem;
+      line-height: 1.85;
+    }
+
+    .badge-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid rgba(245,194,39,0.14);
+      color: var(--text);
+      padding: 0.65rem 1.4rem;
+      border-radius: 2px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .badge:hover { border-color: var(--gold); color: var(--gold); }
+    .badge.blue { border-color: rgba(58,159,212,0.18); }
+    .badge.blue:hover { border-color: var(--blue); color: var(--blue); }
+    .badge svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* FEATURES */
+    .features {
+      padding: 6rem 2.5rem;
+      max-width: 960px;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 3rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1px;
+      background: rgba(245,194,39,0.07);
+      border: 1px solid rgba(245,194,39,0.07);
+    }
+
+    .feature-item {
+      background: var(--dark);
+      padding: 2.2rem 1.8rem;
+      transition: background 0.2s;
+    }
+
+    .feature-item:hover { background: var(--surface); }
+
+    .feature-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      color: rgba(245,194,39,0.18);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-title { font-weight: 500; font-size: 0.95rem; margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+    .feature-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+    /* DIVIDER */
+    .divider {
+      width: calc(100% - 5rem);
+      margin: 0 2.5rem;
+      height: 1px;
+      background: rgba(245,194,39,0.07);
+    }
+
+    /* DELETION SECTION */
+    .policy-section {
+      padding: 6rem 2.5rem;
+      max-width: 720px;
+    }
+
+    .policy-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .updated {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+
+    .policy-section h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      font-weight: 500;
+      margin: 2.5rem 0 0.8rem;
+    }
+
+    .policy-section p { font-size: 0.92rem; color: var(--muted); margin-bottom: 1rem; }
+    .policy-section ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+
+    .policy-section ul li {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding: 0.25rem 0 0.25rem 1.2rem;
+      position: relative;
+    }
+
+    .policy-section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 0.65rem;
+      top: 0.38rem;
+    }
+
+    .policy-section strong { color: var(--text); font-weight: 500; }
+    .policy-section a { color: var(--gold); text-decoration: none; }
+    .policy-section a:hover { text-decoration: underline; }
+
+    .steps { list-style: none; padding: 0; margin-bottom: 1rem; counter-reset: steps; }
+
+    .steps li {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding: 0.4rem 0 0.4rem 2rem;
+      position: relative;
+      counter-increment: steps;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 0;
+      top: 0.35rem;
+      width: 1.3rem;
+      height: 1.3rem;
+      background: rgba(245,194,39,0.12);
+      border: 1px solid rgba(245,194,39,0.25);
+      border-radius: 2px;
+      color: var(--gold);
+      font-size: 0.65rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(245,194,39,0.07);
+      padding: 2.2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo img { height: 32px; width: auto; opacity: 0.8; }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      margin-left: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--gold); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    .hero-title   { animation: fadeUp 0.6s 0.1s ease both; }
+    .hero-sub     { animation: fadeUp 0.6s 0.2s ease both; }
+    .badge-row    { animation: fadeUp 0.6s 0.3s ease both; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0.7rem 1.2rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero, .features, .policy-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .divider { width: calc(100% - 2.4rem); margin: 0 1.2rem; }
+      footer { padding: 2rem 1.2rem; flex-direction: column; align-items: flex-start; }
+      footer a { margin-left: 0; margin-right: 1.2rem; }
+    }
+  </style>
+</head>
 <body>
-<h1>PowerPadel</h1>
-<p>Padel matchmaking in Athens. iOS and Android.</p>
+
+  <nav>
+    <div class="nav-logo">
+      <img src="powerpadel_logo_logo.png" alt="PowerPadel" />
+    </div>
+    <div class="nav-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="#deletion">Account Deletion</a>
+      <a href="mailto:hello@powerpadel.app">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Padel Matchmaking App</div>
+    <h1 class="hero-title">Find Your<br><span>Match.</span></h1>
+    <p class="hero-sub">PowerPadel connects padel players, organises matches, and tracks your ELO rating — so every game counts.</p>
+    <div class="badge-row">
+      <a class="badge" href="https://apps.apple.com/us/app/powerpadel/id6760749947" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download on iOS
+      </a>
+      <a class="badge blue" href="#">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.22.98.14l.09-.05 11.07-6.39-2.38-2.38-9.76 8.68zm-1.1-20.1C2.03 3.9 2 4.15 2 4.41v15.18c0 .26.03.51.08.74l9.9-9.9-9.9-9.77zm19.54 8.32l-2.8-1.62-2.66 2.66 2.66 2.66 2.82-1.63c.8-.46.8-1.61-.02-2.07zM4.25.27L15.7 6.88l-2.38 2.38L4.25.27z"/></svg>
+        Android — Coming Soon
+      </a>
+      <a class="badge" href="mailto:hello@powerpadel.app">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 8l-9 6-9-6"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg>
+        Contact Us
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="section-label">What we do</div>
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="feature-num">01</div>
+        <div class="feature-title">Player Matchmaking</div>
+        <div class="feature-desc">Get matched with players at your level for competitive, enjoyable games.</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-num">02</div>
+        <div class="feature-title">ELO Ratings</div>
+        <div class="feature-desc">Track your progression with a live ELO rating that updates after every match.</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-num">03</div>
+        <div class="feature-title">Match History</div>
+        <div class="feature-desc">Review your results, stats, and opponents across every game you've played.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ACCOUNT DELETION -->
+  <section id="deletion" class="policy-section">
+    <div class="section-label">Account</div>
+    <h2>Account Deletion</h2>
+    <p class="updated">How to delete your account and data</p>
+
+    <p>If you would like to delete your PowerPadel account and all associated data, you can do so using either of the methods below.</p>
+
+    <h3>Option 1 — Delete in the app</h3>
+    <ol class="steps">
+      <li>Open the PowerPadel app</li>
+      <li>Go to your Profile</li>
+      <li>Tap <strong>Delete Account</strong></li>
+      <li>Confirm when prompted</li>
+    </ol>
+    <p>Your account and all associated data will be permanently deleted immediately.</p>
+
+    <h3>Option 2 — Request by email</h3>
+    <p>If you no longer have access to the app, email us at <a href="mailto:info@powerpadel.app">info@powerpadel.app</a> with the subject line <strong>"Account Deletion Request"</strong>. We will process your request within 7 days.</p>
+
+    <h3>What gets deleted</h3>
+    <ul>
+      <li>Your profile information (name, photo, skill level)</li>
+      <li>Match history and ELO rating</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="footer-logo">
+      <img src="powerpadel_logo_logo.png" alt="PowerPadel" />
+    </div>
+    <p>© 2026 PowerPadel. All rights reserved.</p>
+    <div>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="#deletion">Account Deletion</a>
+      <a href="mailto:hello@powerpadel.app">Contact</a>
+    </div>
+  </footer>
+
 </body>
 </html>
